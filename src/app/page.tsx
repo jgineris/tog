@@ -11,7 +11,6 @@ import {
   Text,
   Title,
   Badge,
-  ScrollArea,
   Container,
   SegmentedControl,
 } from "@mantine/core";
@@ -91,11 +90,11 @@ export default function Home() {
     <AppShell
       padding="md"
       header={{ height: 72 }}
-      styles={{
-        main: {
-          paddingBottom: "env(safe-area-inset-bottom)",
-        },
-      }}
+    // styles={{
+    //   main: {
+    //     paddingBottom: "env(safe-area-inset-bottom)",
+    //   },
+    // }}
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
@@ -105,7 +104,7 @@ export default function Home() {
               Track chapters across both books as you go.
             </Text>
           </Box>
-          
+
         </Group>
       </AppShell.Header>
 
@@ -177,47 +176,43 @@ export default function Home() {
               </Group>
               <Progress value={progress} size="lg" radius="xl" />
             </Box>
-
-            <ScrollArea h="calc(100vh - 220px)" offsetScrollbars>
-              <Stack gap="xs" py="xs">
-                {TOG_CHECKLIST.map((item, index) => (
-                  <Box
-                    key={item.id}
-                    px="xs"
-                    py={8}
-                    style={(theme) => ({
-                      borderRadius: theme.radius.md,
-                      border: `1px solid ${
-                        theme.colors.dark[6]
+            <Stack gap="xs" py="xs">
+              {TOG_CHECKLIST.map((item, index) => (
+                <Box
+                  key={item.id}
+                  px="xs"
+                  py={8}
+                  style={(theme) => ({
+                    borderRadius: theme.radius.md,
+                    border: `1px solid ${theme.colors.dark[6]
                       }`,
-                      backgroundColor: theme.colors.dark[7],
-                    })}
-                  >
-                    <Group gap="sm" align="flex-start" wrap="nowrap">
-                      <Checkbox
-                        checked={!!checked[item.id]}
-                        onChange={() => handleToggle(item.id)}
-                        aria-label={`Mark step ${index + 1} complete`}
-                      />
-                      <Box style={{ flex: 1 }}>
-                        <Group gap={6} mt={4} wrap="wrap">
-                          {item.eos && (
-                            <Badge color="grape" variant="light" radius="sm">
-                              {formatLabel(item.eos, "eos")}
-                            </Badge>
-                          )}
-                          {item.tod && (
-                            <Badge color="cyan" variant="light" radius="sm">
-                              {formatLabel(item.tod, "tod")}
-                            </Badge>
-                          )}
-                        </Group>
-                      </Box>
-                    </Group>
-                  </Box>
-                ))}
-              </Stack>
-            </ScrollArea>
+                    backgroundColor: theme.colors.dark[7],
+                  })}
+                >
+                  <Group gap="sm" align="flex-start" wrap="nowrap">
+                    <Checkbox
+                      checked={!!checked[item.id]}
+                      onChange={() => handleToggle(item.id)}
+                      aria-label={`Mark step ${index + 1} complete`}
+                    />
+                    <Box style={{ flex: 1 }}>
+                      <Group gap={6} mt={4} wrap="wrap">
+                        {item.eos && (
+                          <Badge color="grape" variant="light" radius="sm">
+                            {formatLabel(item.eos, "eos")}
+                          </Badge>
+                        )}
+                        {item.tod && (
+                          <Badge color="orange" variant="light" radius="sm">
+                            {formatLabel(item.tod, "tod")}
+                          </Badge>
+                        )}
+                      </Group>
+                    </Box>
+                  </Group>
+                </Box>
+              ))}
+            </Stack>
           </Stack>
         </Container>
       </AppShell.Main>
