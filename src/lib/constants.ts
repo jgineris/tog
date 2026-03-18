@@ -153,3 +153,5 @@ export const TOG_CHECKLIST: ChecklistItem[] = [
 ];
 
 export const STORAGE_KEY = "eos-tod-tandem-progress-v1";
+
+export const TITLE_MODE_STORAGE_KEY = "eos-tod-tandem-title-mode-v1";
