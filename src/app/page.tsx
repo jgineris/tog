@@ -74,6 +74,14 @@ export default function Home() {
   );
   const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
 
+  const eosTotal = TOG_CHECKLIST.filter((item) => item.eos).length;
+  const eosCompleted = TOG_CHECKLIST.filter((item) => checked[item.id] && item.eos).length;
+  const eosProgress = total === 0 ? 0 : Math.round((eosCompleted / eosTotal) * 100);
+
+  const todTotal = TOG_CHECKLIST.filter((item) => item.tod).length;
+  const todCompleted = TOG_CHECKLIST.filter((item) => checked[item.id] && item.tod).length;
+  const todProgress = total === 0 ? 0 : Math.round((todCompleted / todTotal) * 100);
+
   const handleToggle = (id: string) => {
     setChecked((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -90,11 +98,6 @@ export default function Home() {
     <AppShell
       padding="md"
       header={{ height: 72 }}
-    // styles={{
-    //   main: {
-    //     paddingBottom: "env(safe-area-inset-bottom)",
-    //   },
-    // }}
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
@@ -168,6 +171,12 @@ export default function Home() {
                   </Text>
                   <Badge variant="light" ml={10}>
                     {progress}%
+                  </Badge>
+                  <Badge color="grape" variant="light" ml={10}>
+                    EOS {eosProgress}%
+                  </Badge>
+                  <Badge color="orange"variant="light" ml={10}>
+                    TOD {todProgress}%
                   </Badge>
                 </Group>
                 <Text size="xs" c="dimmed">
