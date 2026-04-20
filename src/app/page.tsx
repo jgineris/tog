@@ -13,6 +13,7 @@ import {
   Badge,
   Container,
   SegmentedControl,
+  useMantineTheme,
 } from "@mantine/core";
 
 import {
@@ -22,8 +23,9 @@ import {
 } from "@/lib/constants";
 
 export default function Home() {
+  const theme = useMantineTheme();
   const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const [titleMode, setTitleMode] = useState<"short" | "full">("short");
+  const [titleMode, setTitleMode] = useState<"short" | "full">("full");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -104,7 +106,7 @@ export default function Home() {
           <Box>
             <Title order={4}>Empire of Storms and Tower of Dawn Tandem Read</Title>
             <Text size="xs" c="dimmed">
-              Track chapters across both books as you go.
+              The “Throne of Glass tandem read” means reading Empire of Storms and Tower of Dawn at the same time, since they take place at the same time in the story. You switch between them using a chapter guide so everything stays in order, letting you follow both storylines together and avoid ending on a big cliffhanger.
             </Text>
           </Box>
 
@@ -187,26 +189,21 @@ export default function Home() {
             </Box>
             <Stack gap="xs" py="xs">
               {TOG_CHECKLIST.map((item, index) => (
-                <Box
+                <Checkbox.Card
                   key={item.id}
+                  checked={!!checked[item.id]}
+                  onChange={() => handleToggle(item.id)}
                   px="xs"
                   py={8}
-                  style={(theme) => ({
-                    borderRadius: theme.radius.md,
-                    border: `1px solid ${theme.colors.dark[6]
-                      }`,
-                    backgroundColor: theme.colors.dark[7],
-                  })}
+                  className="checkbox-row"
+                  // color={item.eos ? "grape" : item.tod ? "orange" : undefined}
+                 
                 >
-                  <Group gap="sm" align="flex-start" wrap="nowrap">
-                    <Checkbox
-                      checked={!!checked[item.id]}
-                      onChange={() => handleToggle(item.id)}
-                      aria-label={`Mark step ${index + 1} complete`}
-                    />
-                    <Box style={{ flex: 1 }}>
-                      <Group gap={6} mt={4} wrap="wrap">
-                        {item.eos && (
+                  <Group wrap="nowrap" align="flex-start">
+                    <Checkbox.Indicator color={theme.colors.dark[5]}/>
+                      {/* {item.eos && <Text>{formatLabel(item.eos, "eos")}</Text>} */}
+                      {/* {item.tod && <Text>{formatLabel(item.tod, "tod")}</Text>} */}
+                       {item.eos && (
                           <Badge color="grape" variant="light" radius="sm">
                             {formatLabel(item.eos, "eos")}
                           </Badge>
@@ -216,10 +213,9 @@ export default function Home() {
                             {formatLabel(item.tod, "tod")}
                           </Badge>
                         )}
-                      </Group>
-                    </Box>
+                      
                   </Group>
-                </Box>
+                  </Checkbox.Card>
               ))}
             </Stack>
           </Stack>
